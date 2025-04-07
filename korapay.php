@@ -78,7 +78,7 @@ if ($num_ < 1){
                             <div id="loader" style="display: none;">Processing...</div>
                             
                             <div class="text-center">
-                                <button class="button-84 rounded" role="button" type="submit" name="ttm_" id="ttm_" disabled>Transfer Money</button>
+                                <button class="button-84 rounded" role="button" type="submit" name="ttm_" id="ttm_">Transfer Money</button>
                                 <a href="javascript:void(0)" class="block cank text-underline text-muted caw">Cancel Withdrawal</a>
                             </div>
 
