@@ -148,7 +148,7 @@ if ($num_ < 1){
 
 
     //return response
-    echo json_encode($json_payload, JSON_PRETTY_PRINT);
+    // echo json_encode($json_payload, JSON_PRETTY_PRINT);
 
     // end of else
 }

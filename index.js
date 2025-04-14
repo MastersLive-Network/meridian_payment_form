@@ -157,8 +157,21 @@ $(function(){
             },
             success: function(response) {
                 console.log('Success:', response);
+                var json = response;
 
-                $("#rsp").html("<div class='response_'>Success: "+response+"</div>");
+                if (json.hasOwnProperty('status') && json.status === 500){
+                    $("#rsp").html("<div class='response_ response_50'><strong>TRANSFER ERROR:</strong> Your transfer FAILED, please refer to administrator with this complaint if this persist because it is a SERVER ERROR.</div>");
+                } else if (json.hasOwnProperty('status') && json.status === true){
+                    $(".fhjs__lo").fadeIn();
+                    $(".live-payment").fadeOut();
+
+                    $("#dhjs_pso").html("<div class='response_ response_50'><strong>TRANSFER SUCCESS:</strong> Transfer of NGN "+json.data.currency+" "+json.data.amount+" was initiated successfully with reference: "+json.data.reference+".</div>");
+
+                } else{
+                    $("#rsp").html("<div class='response_ response_50'><strong>TRANSFER FAILED:</strong> Your transfer FAILED because we are unable to process your payout to recipient's bank account.</div>");
+                }
+
+                // $("#rsp").html("<div class='response_'>Success: "+response+"</div>");
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);

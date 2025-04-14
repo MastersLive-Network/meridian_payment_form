@@ -118,6 +118,20 @@ if ($num_ < 1){
             <!-- end of broken link -->
 
 
+            <!-- success or error -->
+            <div class="fhjs__lo">
+                <div class="succ">
+                    <div class="text-center">
+                        <img src="ico_suc.gif" alt="" class="loader">
+                        <small class="bn">Transfer Success!</small>
+                        <section class="text-muted" id="tmsg">Transfer of NGN 10000.00 was initiated successfully sjknsskds jksdsjk klnsfsd fkjndsfd.</section>
+                        <section class="text-muted dhjs_pso">You can close this window</section>
+                    </div>
+                </div>
+            </div>
+            <!-- end of success or error -->
+
+
             <div class="overlay none">
                 <div class="text-center">
                     <img src="3686971.png" class="close__" alt="">
