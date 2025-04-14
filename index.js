@@ -161,7 +161,7 @@ $(function(){
 
                 if (json.hasOwnProperty('status') && json.status === 500){
                     $("#rsp").html("<div class='response_ response_50'><strong>TRANSFER ERROR:</strong> Your transfer FAILED, please refer to administrator with this complaint if this persist because it is a SERVER ERROR.</div>");
-                } else if (json.hasOwnProperty('status') && json.status === true){
+                } else if (json.hasOwnProperty('status') && json.status === "true"){
                     $(".fhjs__lo").fadeIn();
                     $(".live-payment").fadeOut();
 
