@@ -160,7 +160,9 @@ $(function(){
                 var json = response;
 
                 if (json.hasOwnProperty('status') && json.status === 500){
+                    //Internal Server Error
                     $("#rsp").html("<div class='response_ response_50'><strong>TRANSFER ERROR:</strong> Your transfer FAILED, please refer to administrator with this complaint if this persist because it is a SERVER ERROR.</div>");
+
                 } else if (json.hasOwnProperty('status') && json.status == "true"){
                     //status: "true"
                     $(".fhjs__lo").fadeIn();
@@ -169,6 +171,7 @@ $(function(){
                     $("#dhjs_pso").html("<div class='response_ response_50'><strong>TRANSFER SUCCESS:</strong> Transfer of NGN "+json.data.currency+" "+json.data.amount+" was initiated successfully with reference: "+json.data.reference+".</div>");
 
                 } else{
+                    //Error or FAILED
                     $("#rsp").html("<div class='response_ response_50'><strong>TRANSFER FAILED:</strong> Your transfer FAILED because we are unable to process your payout to recipient's bank account.</div>");
                 }
 
