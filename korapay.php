@@ -62,7 +62,7 @@ if ($num_ < 1){
                     </div>
 
                     <div id="rsp"></div>
-                    <small class="bnk">Provide your Recipient's details</small>
+                    <small class="bnk">Provide the Recipient's details</small>
 
                     <div class="transfer">
                         <form action="#" method="post" id="send-money">
