@@ -152,5 +152,35 @@ if ($num_ < 1){
     //return response
     // echo json_encode($json_payload, JSON_PRETTY_PRINT);
 
+    $PRIZMA_STAGING_NOTIFY_URL = "https://payments-stage.meridianbet.com/proxy/notify/";// {paymentId}
+    $notifyUrl = $PRIZMA_STAGING_NOTIFY_URL . $prizma_req['paymentId'];
+
+    notify_prizma($notifyUrl, $json_payload);
+
     // end of else
+}
+
+
+
+function notify_prizma($notifyUrl, $json_payload){
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $notifyUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $json_payload,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
 }
