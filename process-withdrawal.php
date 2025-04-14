@@ -1,6 +1,8 @@
 <?php
 // Set the content type to JSON
 header('Content-Type: application/json');
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
 
 require "db/connect.php";
 

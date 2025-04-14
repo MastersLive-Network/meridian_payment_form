@@ -171,7 +171,6 @@ $(function(){
                     $("#rsp").html("<div class='response_ response_50'><strong>TRANSFER FAILED:</strong> Your transfer FAILED because we are unable to process your payout to recipient's bank account.</div>");
                 }
 
-                // $("#rsp").html("<div class='response_'>Success: "+response+"</div>");
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
