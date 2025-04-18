@@ -1,4 +1,13 @@
 <?php
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '', // optional if same domain
+    'secure' => true, // Required for SameSite=None
+    'httponly' => true,
+    'samesite' => 'None'
+]);
+
 @session_start();
 
 header('Content-Type: application/json; charset=utf-8');
