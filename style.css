@@ -23,7 +23,7 @@ body{
     min-height: 500px;
     border-radius: 10px;
     /* padding: 25px 35px; */
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
 }
 
@@ -112,6 +112,18 @@ img{
     /* color: red; */
     color: rgba(179, 53, 53, 0.532);
     margin-top: 5px
+}
+
+.border-btn{
+    display: inline-flex;
+    border-radius: 30px;
+    border: 2px solid #25292e;
+    color: #25292e;
+    padding: 0 32px;
+    font-size: 18px;
+    height: 52px;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-84 {
@@ -363,11 +375,28 @@ button#ttm_:disabled {
     padding: 40px !important;
 }
 
+.su__{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px !important;
+}
+
 .loader{
     max-width: 300px;
     max-height: 300px;
     /* border-radius: 50%; */
     background-color: #e5f3e6;
+    margin-bottom: 50px;
+    margin-top: -100px !important;
+}
+
+
+.loader_{
+    max-width: 300px;
+    max-height: 300px;
     margin-bottom: 50px;
     margin-top: -100px !important;
 }
@@ -379,4 +408,71 @@ button#ttm_:disabled {
     padding: 5px 15px;
     border-radius: 20px;
     transform: scale(.8);
+}
+
+.details{
+    /* border-bottom: 1px solid #ccc; */
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.chp__{
+    background: #e5e5e5;
+    padding: 5px 10px;
+    padding-left: 25px !important;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    font-size: 13px !important;
+    display: inline-block;
+    font-weight: bold !important;
+    margin-left: -25px;
+}
+
+.succcess{
+    background-color: #bbf7d0;
+    color: #166534;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 20px;
+    border: 1px solid #16653448;
+}
+
+.mb-010{
+    margin-bottom: -20px !important;
+}
+
+.mt002{
+    margin-top: 0px !important;
+}
+
+.back{
+    background-color: #25292e;
+    background-image: linear-gradient(#464d55, #25292e);
+    border-radius: 30px;
+    padding: 7px 20px;
+    position: relative;
+    margin-left: -45px !important;
+    z-index: 1122;
+    color: #fff !important;
+}
+
+.back img{
+    display: inline-block;
+    max-width: 20px !important;
+    margin-top: 18px !important;
+    margin-left: -5px;
+    filter: invert(1);
+}
+
+
+
+.overflow-hidden{
+    overflow: hidden !important;
+}
+
+.dpsla{
+    color: red !important;
 }

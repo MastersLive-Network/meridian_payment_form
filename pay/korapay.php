@@ -7,10 +7,10 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
-require "db/connect.php";
+require "../db/connect.php";
 
 //get details of transaction
 $code = $_GET['u'] ?? '';
@@ -38,20 +38,20 @@ if ($num_ < 1){
         <meta http-equiv="Expires" content="0" />
 
         <title>Meridianbet NG - Korapay Payment Processor</title>
-        <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="style.css" rel="stylesheet" type="text/css" />
+        <link href="../bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <img src="meridianbetlogo.png" class="logo" alt="">
+        <img src="../meridianbetlogo.png" class="logo" alt="">
         <div class="paybox overflow-hidden">
             <!-- start live payment -->
             <?php
-            if ((isset($_GET['u']) && ($_GET['u'] !== "")) && ($num_ > 0)){
+            if ((isset($_GET['u']) && ($_GET['u'] !== "")) && ($num_ > 0) && ($record['status'] == 'PENDING')){
                 ?>
                 <div class="live-payment">
                     <div class="row">
                         <div class="col-auto">
-                            <img src="payment-protection.png" alt="">
+                            <img src="../payment-protection.png" alt="">
                         </div>
                         <div class="col text-right">
                             <div class="float-end">
@@ -65,8 +65,10 @@ if ($num_ < 1){
                     <small class="bnk">Provide your Recipient's details</small>
 
                     <div class="transfer">
-                        <form action="#" method="post" id="send-money">
-                            <input type="hidden" name="id" value="<?= $_GET['u'] ?? '' ?>">
+                        <form action="#" method="post" id="send_money__">
+                            <input type="hidden" name="payid" id="payid" value="<?= $_GET['u'] ?? '' ?>">
+                            <input type="hidden" name="acc_name" id="acc_name">
+                            <input type="hidden" name="customer_name" value="<?= ucwords($record['last_name']) . " " . ucwords($record['first_name']) ?>">
 
                             <div class="form_">
                                 <label for="account_details">Select Bank</label>
@@ -79,8 +81,8 @@ if ($num_ < 1){
                                 <input type="number" name="acc" id="acc" placeholder="Receiver's NUBAN details">
                             </div>
                             <div class="float-end">
-                                <img src="check_green.png" id="success_" alt="">
-                                <img src="error_red.png" id="error_" alt="">
+                                <img src="../check_green.png" id="success_" alt="">
+                                <img src="../error_red.png" id="error_" alt="">
                             </div>
                             <div class="clearfix"></div>
                             <div class="result"></div>
@@ -100,7 +102,7 @@ if ($num_ < 1){
 
                     <div class="text-center">
                         <small class="wpoidj">Powered By:</small>
-                        <img src="66a2d8aea3c4ec479b61b664_korapay.png" alt="">
+                        <img src="../66a2d8aea3c4ec479b61b664_korapay.png" alt="">
                     </div>
                 </div>
                 <?php
@@ -110,11 +112,11 @@ if ($num_ < 1){
 
             <!-- start broken link -->
             <?php
-            if (!isset($_GET['u']) || (trim($_GET['u']) === "") || ($num_ < 1)){
+            if (!isset($_GET['u']) || (trim($_GET['u']) === "") || ($num_ < 1) || ($record['status'] != 'PENDING')){
                 ?>
                 <div class="broken">
                     <div>
-                        <img src="broken.png" class="brklnk constant-tilt-shake" alt="">
+                        <img src="../broken.png" class="brklnk constant-tilt-shake" alt="">
                         <small class="bn">403 - Forbidden</small>
                         <div class="mt-2">
                             <small class="bnk text-muted">This payment link is unavailable, may not exist, or may have been entered incorrectly.</small>
@@ -130,7 +132,7 @@ if ($num_ < 1){
 
             <div class="overlay none">
                 <div class="text-center">
-                    <img src="3686971.png" class="close__" alt="">
+                    <img src="../3686971.png" class="close__" alt="">
                     <div class="mb-3">
                         <span class="text-white ekjsoa">Cancel</span>
                     </div>
@@ -143,7 +145,7 @@ if ($num_ < 1){
 
         </div>
 
-        <script src="jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="index.js" type="text/javascript"></script>
+        <script src="../jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="../index.js" type="text/javascript"></script>
     </body>
 </html>
