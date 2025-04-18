@@ -83,7 +83,7 @@ $session = json_decode($decrypted, true);
                         </div>
                     </div> -->
 
-                    <a href="korapay?u=<?= $_GET['u'] ?>" class="back"><img src="../left.png" alt=""> Account Details</a>
+                    <a href="korapay.php?u=<?= $_GET['u'] ?>" class="back"><img src="../left.png" alt=""> Account Details</a>
 
                     <div id="rsp"></div>
                     <div class="succcess">Recipient's account verified successfully</div>
