@@ -200,6 +200,6 @@ $session = json_decode($decrypted, true);
         </div>
 
         <script src="../jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="../index.js" type="text/javascript"></script>
+        <script src="index-v1.1.js" type="text/javascript"></script>
     </body>
 </html>
