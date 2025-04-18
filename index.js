@@ -236,7 +236,7 @@ $(function(){
                 //do nothing because of redirect
 
                 if (response.hasOwnProperty('status') && response.status === true){
-                    window.location.href = "kora-verify?u=" + $("#payid").val();
+                    window.location.href = "kora-verify.php?u=" + $("#payid").val();
 
                 } else if (response.hasOwnProperty('status') && response.status === false){
                     $("#rsp").html("<div class='response_ response_50'><strong>FAILED:</strong> Some fields are invalid, please retry.</div>");
@@ -289,7 +289,7 @@ $(function(){
                 console.log(response);
 
                 if (response.hasOwnProperty('status') && response.status === true){
-                    window.location.href = "kora-done?u=" + $("#id").val();
+                    window.location.href = "kora-done.php?u=" + $("#id").val();
 
                 } else if (response.hasOwnProperty('status') && response.status === false){
                     $("#rsp").html("<div class='response_ response_50'><strong>ERROR:</strong> " + response.message + ", redirecting...</div>");
@@ -298,7 +298,7 @@ $(function(){
 
                     setTimeout(function() {
                         // Use location.replace to prevent going back
-                        window.location.replace("kora-error?u=" + $("#id").val());
+                        window.location.replace("kora-error.php?u=" + $("#id").val());
                     }, 4000); 
 
                 } else{
