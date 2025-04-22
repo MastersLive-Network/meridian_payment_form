@@ -1,4 +1,9 @@
 <?php
+session_set_cookie_params([
+    'samesite' => 'None',
+    'secure' => true, // required for SameSite=None
+]);
+
 @session_start();
 
 // Disable browser caching
