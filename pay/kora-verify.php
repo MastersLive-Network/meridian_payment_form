@@ -135,12 +135,12 @@ $session = json_decode($decrypted, true);
 
                     <div class="transfer">
                         <form action="#" method="post" id="notify_prizma">
-                            <input type="hidden" name="id" id="id" value="<?= $_GET['u'] ?? '' ?>">
-                            <input type="hidden" name="bank_code" value="<?= $_GET['bank_code'] ?? '' ?>">
-                            <input type="hidden" name="bank_name" value="<?= $_GET['bank_name'] ?? '' ?>">
-                            <input type="hidden" name="customer_name" value="<?= $_GET['customer_name'] ?? '' ?>">
-                            <input type="hidden" name="account_number" value="<?= $_GET['account_number'] ?? '' ?>">
-                            <input type="hidden" name="account_name" value="<?= $_GET['acc_name'] ?? '' ?>">
+                            <input type="hidden" name="id" id="id" value="<?= $session['payid'] ?? '' ?>">
+                            <input type="hidden" name="bank_code" value="<?= $session['bank_code'] ?? '' ?>">
+                            <input type="hidden" name="bank_name" value="<?= $session['bank_name'] ?? '' ?>">
+                            <input type="hidden" name="customer_name" value="<?= $session['customer_name'] ?? '' ?>">
+                            <input type="hidden" name="account_number" value="<?= $session['account_number'] ?? '' ?>">
+                            <input type="hidden" name="account_name" value="<?= $session['acc_name'] ?? '' ?>">
 
                             <div class="dpsla"></div>
                             <div id="loader" style="display: none;">Processing...</div>
