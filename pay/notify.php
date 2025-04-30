@@ -52,12 +52,16 @@ $timestamp = round(microtime(true) * 1000);
 
 
 
+// Staging: https://payments-stage.meridianbet.com/proxy/notify/{paymentId}
+
+// Live: https://prizma.meridianbet.com/proxy/notify/{paymentId}
+
 
 //send notification to MERIDIANBET
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://payments-stage.meridianbet.com/proxy/notify/'.$request['paymentId'],
+  CURLOPT_URL => 'https://prizma.meridianbet.com/proxy/notify/'.$request['paymentId'],
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,

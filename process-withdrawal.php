@@ -124,7 +124,7 @@ if ($num_ < 1){
             "documentValue" => " ",
             "accountType" => "SAVING",
             "accountNumber" => $account_number,
-            "cci" => ""
+            "cci" => $bank_code
         ],
         "currencyNumericCode" => 604,
         "errorMessage" => "",
