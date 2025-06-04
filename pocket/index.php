@@ -207,7 +207,7 @@ if ($num_ < 1){
         ?>
         setTimeout(() => {
             payWithPocket.show();
-        }, 2000);
+        }, 1000);
         <?php
         }
         ?>
