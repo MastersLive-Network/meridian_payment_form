@@ -67,7 +67,7 @@ if ($num_ < 1){
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://prizma.meridianbet.com/proxy/notify/'.$record['payment_id'],
+    CURLOPT_URL => 'https://payments-stage.meridianbet.com/proxy/notify/'.$record['payment_id'],
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => '',
     CURLOPT_MAXREDIRS => 10,
