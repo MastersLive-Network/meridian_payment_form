@@ -107,7 +107,7 @@ if ($num_ < 1){
     $response = curl_exec($curl);
 
     curl_close($curl);
-    // echo $response;
+    echo $response;
 
 
     //decode response
