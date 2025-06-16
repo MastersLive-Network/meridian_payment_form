@@ -232,6 +232,8 @@ if ($num_ < 1){
         
         function success(){
             document.getElementById("pending").style.display = "none";
+            document.getElementById("error").style.display = "none";
+            document.getElementById("cancel").style.display = "none";
             document.getElementById("success").style.display = "block";
 
             location.href = "success.php?u=<?= $code ?>";
