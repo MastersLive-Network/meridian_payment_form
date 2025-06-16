@@ -107,12 +107,12 @@ if ($num_ < 1){
     $response = curl_exec($curl);
 
     curl_close($curl);
-    echo $response;
+    // echo $response;
 
 
     //decode response
     $res = json_decode($response, true);
-    print_r($res);
+    // print_r($res);
 
     // Convert to JSON
     $jsonData = json_encode($res);
