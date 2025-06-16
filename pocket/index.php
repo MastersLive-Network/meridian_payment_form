@@ -17,7 +17,13 @@ if ($num_ < 1){
 
 } else{
     $record = mysqli_fetch_assoc($result_);
+
+    if ($record['pocket_status'] !== "PENDING"){
+        header('Location: 403.php');
+    }
 }
+
+//if status is not pending, go to another page, link expired
 
 ?>
 <html>
@@ -137,14 +143,14 @@ if ($num_ < 1){
                 <section class="chip_p">&#8358; <?= number_format($record['amount']) ?></section>
             </div>
             
-            <div class="pending">
+            <div class="pending" id="pending">
                 <h1 class="mt-20">Payment Processing</h1>
                 <div class="loader"></div>
             </div>
         <?php
         } else{
             ?>
-            <div class="invalid mt-20 p-4">
+            <div class="invalid mt-20 p-4" id="invalid">
                 <img src="../error-512.png" class="ww" alt="">
                 <h1 class="mt-20 p-4">PAYMENT DOES NOT EXIST</h1>
                 <small class="text-muted">Payment link does not exist. Please close this window to reinitiate another payment if this was a mistake.</small>
@@ -154,7 +160,7 @@ if ($num_ < 1){
         ?>
 
 
-        <div class="cancel mt-20 p-4">
+        <div class="cancel mt-20 p-4" id="cancel">
             <img src="../error_red.png" class="ww" alt="">
             <h1 class="mt-20 p-4">PAYMENT CANCELED</h1>
             <small class="text-muted">Payment was canceled. Please close this window to reinitiate another payment if this was a mistake.</small>
@@ -165,13 +171,13 @@ if ($num_ < 1){
 
 
 
-        <div class="error mt-20 p-4">
+        <div class="error mt-20 p-4" id="error">
             <img src="../error_red.png" class="ww" alt="">
             <h1 class="mt-20 p-4">ERROR OCCURED</h1>
             <small class="text-muted">An error occured while processing your payment or with your inputs, please try again later.</small>
         </div>
 
-        <div class="success mt-20 p-4">
+        <div class="success mt-20 p-4" id="success">
             <img src="../check_green.png" class="ww" alt="">
             <h1 class="mt-20 p-4">PAYMENT SUCCESSFUL</h1>
             <small class="text-muted">Your account has been credited with your payment.</small>
@@ -193,7 +199,7 @@ if ($num_ < 1){
             reference: "<?= $record['reference'] ?>",
             narration: "topping up my meridianbet wallet",
             view: "popup",
-            redirect_url: "",
+            redirect_url: "success.php?u=<?= $code ?>",
             onSuccess: success, // when we have confirmed payment transaction, it returns reference of the transaction 
             onClose: cancel, // when the checkout has been closed
             onPending: Function, // when the user claims they have made payment
@@ -215,23 +221,31 @@ if ($num_ < 1){
 
 
         function error(){
-            document.getElementsByClassName("pending").style.display = "none";
-            document.getElementsByClassName("error").style.display = "block";
+            document.getElementById("pending").style.display = "none";
+            document.getElementById("error").style.display = "block";
+            
+            // console.log("error", err);
         }
 
 
 
         
         function success(){
-            document.getElementsByClassName("pending").style.display = "none";
-            document.getElementsByClassName("success").style.display = "block";
+            document.getElementById("pending").style.display = "none";
+            document.getElementById("success").style.display = "block";
+
+            location.href = "success.php?u=<?= $code ?>";
         }
 
 
 
         function cancel(){
-            document.getElementsByClassName("pending")[0].style.display = "none";
-            document.getElementsByClassName("cancel")[0].style.display = "block";
+            document.getElementById("pending").style.display = "none";
+            document.getElementById("cancel").style.display = "block";
+
+            // setTimeout(() => {
+            //     location.href = "success.php?u=<?= $code ?>"
+            // }, 500);
         }
 
 
