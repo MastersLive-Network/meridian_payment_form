@@ -94,7 +94,7 @@ if ($num_ < 1){
             "customerFirstName": "'.$request['customerParams']['customerFirstName'].'",
             "currency": "'.$request['customerParams']['currency'].'",
             "customerLastName": "'.$request['customerParams']['customerLastName'].'",
-            "paymentClientApp": "'.$request['customerParams']['paymentClientApp'].'",
+            "paymentClientApp": "'.($request['customerParams']['paymentClientApp'] ?? '').'",
             "customerCountryIso2": "NG",
             "customerCountry": "Nigeria"
         }
@@ -112,6 +112,7 @@ if ($num_ < 1){
 
     //decode response
     $res = json_decode($response, true);
+    print_r($res);
 
     // Convert to JSON
     $jsonData = json_encode($res);
@@ -135,7 +136,7 @@ if ($num_ < 1){
             "customerFirstName": "'.$request['customerParams']['customerFirstName'].'",
             "currency": "'.$request['customerParams']['currency'].'",
             "customerLastName": "'.$request['customerParams']['customerLastName'].'",
-            "paymentClientApp": "'.$request['customerParams']['paymentClientApp'].'",
+            "paymentClientApp": "'.($request['customerParams']['paymentClientApp'] ?? '').'",
             "customerCountryIso2": "NG",
             "customerCountry": "Nigeria"
         }
@@ -169,6 +170,10 @@ if ($num_ < 1){
 <style>
     *{
         font-family: "Montserrat";
+    }
+
+    body{
+        background: #fff;
     }
 
     svg{
