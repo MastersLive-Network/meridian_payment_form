@@ -196,7 +196,7 @@ if ($num_ < 1){
     <script src="https://pocket-checkout-sdk.netlify.app/checkout-sdk.js"></script>
     <script type="text/javascript">
         const payWithPocket = new Pocket({
-            key:'test_public_key_QuZqGF8dFwN2YTrl2wBTIW2d',
+            key:'live_public_key_XTQEIwoPHG7GxurWC6AhA6Pu',
             amount: <?= $record['amount'] * 100 ?>,// amount to charge (in kobo)
             reference: "<?= $record['reference'] ?>",
             narration: "topping up my meridianbet wallet",
