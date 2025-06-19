@@ -28,6 +28,8 @@ if ($num_ < 1){
 ?>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket</title>
     <link href="../bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style>
