@@ -76,89 +76,7 @@ if ($num_ < 1){
     // Live: https://prizma.meridianbet.com/proxy/notify/{paymentId}
 
 
-    //send notification to MERIDIANBET
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://payments-stage.meridianbet.com/proxy/notify/'.$record['payment_id'],
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS =>'{
-        "paymentId": "'.$record['payment_id'].'",
-        "paymentType": "DEPOSIT",
-        "accountId": "'.$record['account_id'].'",
-        "amount": '.$record['amount'].',
-        "currencyCode": "NGN",
-        "createTimestamp": '.$timestamp.',
-        "status": "CREATE_TRANSFER",
-        "currencyNumericCode": 566,
-        "overrideAmount": false,
-        "customerParams": {
-            "customerBirthdate": "1993-02-08",
-            "customerPhone": "'.$request['customerParams']['customerPhone'].'",
-            "clientLanguage": "en",
-            "customerPersonalId": "",
-            "customerEmail": "'.$request['customerParams']['customerEmail'].'",
-            "customerFirstName": "'.$request['customerParams']['customerFirstName'].'",
-            "currency": "'.($request['customerParams']['currency'] ?? 'NGN').'",
-            "customerLastName": "'.$request['customerParams']['customerLastName'].'",
-            "paymentClientApp": "'.($request['customerParams']['paymentClientApp'] ?? '').'",
-            "customerCountryIso2": "NG",
-            "customerCountry": "Nigeria"
-        }
-    }',
-    CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/json'
-    ),
-    ));
-
-    $response = curl_exec($curl);
-
-    curl_close($curl);
-    // echo $response;
-
-
-    //decode response
-    $res = json_decode($response, true);
-    // print_r($res);
-
-    // Convert to JSON
-    $jsonData = json_encode($res);
-
-    $prizma_req= '{
-        "paymentId": "'.$record['payment_id'].'",
-        "paymentType": "DEPOSIT",
-        "accountId": "'.$record['account_id'].'",
-        "amount": '.$record['amount'].',
-        "currencyCode": "NGN",
-        "createTimestamp": '.$timestamp.',
-        "status": "CREATE_TRANSFER",
-        "currencyNumericCode": 566,
-        "overrideAmount": false,
-        "customerParams": {
-            "customerBirthdate": "1993-02-08",
-            "customerPhone": "'.$request['customerParams']['customerPhone'].'",
-            "clientLanguage": "en",
-            "customerPersonalId": "",
-            "customerEmail": "'.$request['customerParams']['customerEmail'].'",
-            "customerFirstName": "'.$request['customerParams']['customerFirstName'].'",
-            "currency": "'.($request['customerParams']['currency'] ?? 'NGN').'",
-            "customerLastName": "'.$request['customerParams']['customerLastName'].'",
-            "paymentClientApp": "'.($request['customerParams']['paymentClientApp'] ?? '').'",
-            "customerCountryIso2": "NG",
-            "customerCountry": "Nigeria"
-        }
-    }';
-
-    $minified = json_encode(json_decode($prizma_req));
-
-    $query_d = "UPDATE coralpay_deposit SET notify_prizma_req='$minified', notify_prizma_res_notif='$jsonData' WHERE payment_id='$code'";
-    $result_d = mysqli_query($con, $query_d);
+    
 }
 ?>
 
@@ -175,7 +93,14 @@ if ($num_ < 1){
 
 <br><br>
 <img src="3459959.png" style="max-width: 60px;margin-top: 20px" alt="">
-<h1>Deposit successful</h1>
+<?php
+if ($error == '') {
+    echo "<h1>Deposit successful</h1>";
+} else {
+    echo "<h1>Transaction Not Found</h1>";
+    echo '<small>'.$error.'</small>';
+}
+?>
 <small class="text-muted">Please close this window</small><br><br><br><br>
 <div class="text-center">
     <small class="wpoidj">Powered By:</small><br>
