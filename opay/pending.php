@@ -77,7 +77,7 @@ if ($reference !== ''){
             $stmt = $con->prepare(
                 "UPDATE opay_deposit SET query_status = ? WHERE payment_id = ?"
             );
-            $stmt->bind_param("ss", $callbackJson, $reference);
+            $stmt->bind_param("ss", $result, $reference);
             $stmt->execute();
 
             // filter data to notify MERIDIANBET
