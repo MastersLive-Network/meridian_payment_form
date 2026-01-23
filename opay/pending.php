@@ -11,7 +11,6 @@ $url = 'https://testapi.opaycheckout.com/api/v1/international/cashier/status';
 $reference = trim($_GET['ref']);
 
 function auth ( $data, $secretKey ) {
-    $secretKey = $secretkey;
     $auth = hash_hmac('sha512', $data, $secretKey);
     return $auth;
 }
@@ -97,7 +96,7 @@ if ($reference !== ''){
                 "paymentId"            => $record['payment_id'],
                 "paymentType"          => "DEPOSIT",
                 "accountId"            => $record['account_id'],
-                "amount"               => (float)$payload['amount'],
+                "amount"               => (float)$record['amount'],
                 "currencyCode"         => "NGN",
                 "createTimestamp"      => $timestampMs,
                 "status"               => $prizmaStatus,
