@@ -48,14 +48,14 @@ if ($reference !== ''){
 
     if ($result->num_rows < 1) {
         // log the error
-         $timestamp = date("Ymd_His");
+        $timestamp = date("Ymd_His");
         $filename  = __DIR__ . "/callbacks/{$timestamp}.txt";
 
         if (!is_dir(__DIR__ . "/callbacks")) {
             mkdir(__DIR__ . "/callbacks", 0777, true);
         }
 
-        file_put_contents($filename, $callbackJson);
+        file_put_contents($filename, $reference);
     } else{
         // ref exist
         $record = $result->fetch_assoc();
@@ -72,7 +72,6 @@ if ($reference !== ''){
 
         // decode result
         if ($result) {
-            $callbackJson = json_encode($result, JSON_UNESCAPED_SLASHES);
             // Save callback data
             $stmt = $con->prepare(
                 "UPDATE opay_deposit SET query_status = ? WHERE payment_id = ?"
