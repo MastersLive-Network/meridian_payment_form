@@ -2,6 +2,149 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+require_once("../db/connect.php");
+
+$merchantId = '256624093066025';
+$secretkey = 'OPAYPRV17277085871070.5999657476412334';
+$url = 'https://testapi.opaycheckout.com/api/v1/international/cashier/status';
+
+$reference = trim($_GET['ref']);
+
+function auth ( $data, $secretKey ) {
+    $secretKey = $secretkey;
+    $auth = hash_hmac('sha512', $data, $secretKey);
+    return $auth;
+}
+
+function http_post ($url, $header, $data) {
+    if (!function_exists('curl_init')) {
+        throw new Exception('php not found curl', 500);
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    $response = curl_exec($ch);
+    $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error=curl_error($ch);
+    curl_close($ch);
+    if (200 != $httpStatusCode) {
+        print_r("invalid httpstatus:{$httpStatusCode} ,response:$response,detail_error:" . $error, $httpStatusCode);
+    }
+    return $response;
+}
+
+if ($reference !== ''){
+    // 1. Check DB
+    $stmt = $con->prepare("SELECT * FROM opay_deposit WHERE payment_id = ?");
+    $stmt->bind_param("s", $reference);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows < 1) {
+        // log the error
+         $timestamp = date("Ymd_His");
+        $filename  = __DIR__ . "/callbacks/{$timestamp}.txt";
+
+        if (!is_dir(__DIR__ . "/callbacks")) {
+            mkdir(__DIR__ . "/callbacks", 0777, true);
+        }
+
+        file_put_contents($filename, $callbackJson);
+    } else{
+        // ref exist
+        $record = $result->fetch_assoc();
+
+        $data = [
+            'country' => 'NG',
+            'reference' => $reference
+        ];
+        $data2 = (string) json_encode($data,JSON_UNESCAPED_SLASHES);
+        $auth = auth($data2);
+        $header = ['Content-Type:application/json', 'Authorization:Bearer '. $auth, 'MerchantId:'.$merchantId];
+        $response = http_post($url, $header, json_encode($data));
+        $result = $response?$response:null;
+
+        // decode result
+        if ($result) {
+            $callbackJson = json_encode($result, JSON_UNESCAPED_SLASHES);
+            // Save callback data
+            $stmt = $con->prepare(
+                "UPDATE opay_deposit SET query_status = ? WHERE payment_id = ?"
+            );
+            $stmt->bind_param("ss", $callbackJson, $reference);
+            $stmt->execute();
+
+            // filter data to notify MERIDIANBET
+            $decoded = json_decode($result, true); // decode to associative array
+            $prizmaStatus = 'FAILED';
+            if ($decoded['code'] === '00000' && $decoded['message'] === 'SUCCESSFUL') {
+                // success
+                $prizmaStatus = 'CREATE_TRANSFER';
+            }
+
+            // Timestamp in milliseconds
+            $timestampMs = round(microtime(true) * 1000);
+
+            // Compose Prizma request
+            $prizma_req = [
+                "paymentId"            => $record['payment_id'],
+                "paymentType"          => "DEPOSIT",
+                "accountId"            => $record['account_id'],
+                "amount"               => (float)$payload['amount'],
+                "currencyCode"         => "NGN",
+                "createTimestamp"      => $timestampMs,
+                "status"               => $prizmaStatus,
+                "currencyNumericCode"  => 566,
+                "overrideAmount"       => false,
+                "customerParams"       => [
+                    "customerPhone"      => $record['customer_phone'] ?? '2349012341234',
+                    "customerEmail"      => $record['customer_email'] ?? 'kayode@meridianbet.com',
+                    "customerFirstName"  => $record['customer_first_name'] ?? 'Kayode',
+                    "customerLastName"   => $record['customer_last_name'] ?? 'shobalaje',
+                    "clientLanguage"     => "en",
+                    "customerCountryIso2"=> "NG",
+                    "customerCountry"    => "Nigeria"
+                ]
+            ];
+
+            $prizmaReqJson = json_encode($prizma_req, JSON_UNESCAPED_SLASHES);
+
+            // Send notification to MeridianBet
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL            => "https://payments-stage.meridianbet.com/proxy/notify/" . $record['payment_id'],
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST  => "POST",
+                CURLOPT_HTTPHEADER     => ["Content-Type: application/json"],
+                CURLOPT_POSTFIELDS     => $prizmaReqJson,
+                CURLOPT_TIMEOUT        => 30
+            ]);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            // 6. Save Prizma request
+            $stmt = $con->prepare(
+                "UPDATE opay_deposit 
+                SET notify_prizma_req = ?, status = 'COMPLETED' 
+                WHERE payment_id = ?"
+            );
+            $stmt->bind_param("ss", $prizmaReqJson, $reference);
+            $stmt->execute();
+        }
+    }
+
+    
+}
+
 ?>
 <html>
 <head>
