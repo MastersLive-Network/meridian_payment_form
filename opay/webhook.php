@@ -67,6 +67,10 @@ $prizmaStatus = ($payload['refunded'] === true)
     ? "FAILED"
     : "CREATE_TRANSFER";
 
+$prizmaStatus = ($payload['status'] !== "SUCCESS")
+    ? "FAILED"
+    : "CREATE_TRANSFER";
+
 // Timestamp in milliseconds
 $timestampMs = round(microtime(true) * 1000);
 
@@ -112,7 +116,7 @@ curl_close($curl);
 // 6. Save Prizma request
 $stmt = $con->prepare(
     "UPDATE opay_deposit 
-     SET notify_prizma_req = ? 
+     SET notify_prizma_req = ?, status = 'COMPLETED' 
      WHERE payment_id = ?"
 );
 $stmt->bind_param("ss", $prizmaReqJson, $reference);
