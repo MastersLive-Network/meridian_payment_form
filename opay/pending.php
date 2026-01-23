@@ -66,7 +66,7 @@ if ($reference !== ''){
             'reference' => $reference
         ];
         $data2 = (string) json_encode($data,JSON_UNESCAPED_SLASHES);
-        $auth = auth($data2);
+        $auth = auth($data2, $secretKey);
         $header = ['Content-Type:application/json', 'Authorization:Bearer '. $auth, 'MerchantId:'.$merchantId];
         $response = http_post($url, $header, json_encode($data));
         $result = $response?$response:null;
