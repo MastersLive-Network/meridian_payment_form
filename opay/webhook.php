@@ -38,9 +38,6 @@ $result = $stmt->get_result();
 
 if ($result->num_rows < 1) {
 
-    // 4. If it does NOT exist
-    http_response_code(200);
-
     $timestamp = date("Ymd_His");
     $filename  = __DIR__ . "/callbacks/{$timestamp}.txt";
 
@@ -49,6 +46,9 @@ if ($result->num_rows < 1) {
     }
 
     file_put_contents($filename, $callbackJson);
+
+    // 4. If it does NOT exist
+    http_response_code(200);
     exit;
 }
 
