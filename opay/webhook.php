@@ -101,8 +101,12 @@ $prizmaReqJson = json_encode($prizma_req, JSON_UNESCAPED_SLASHES);
 // Send notification to MeridianBet
 $curl = curl_init();
 
+// Staging: https://payments-stage.meridianbet.com/proxy/notify/{paymentId}
+
+// Live: https://prizma.meridianbet.com/proxy/notify/{paymentId}
+
 curl_setopt_array($curl, [
-    CURLOPT_URL            => "https://payments-stage.meridianbet.com/proxy/notify/" . $record['payment_id'],
+    CURLOPT_URL            => "https://prizma.meridianbet.com/proxy/notify/" . $record['payment_id'],
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CUSTOMREQUEST  => "POST",
     CURLOPT_HTTPHEADER     => ["Content-Type: application/json"],
