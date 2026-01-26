@@ -5,7 +5,8 @@ ini_set('display_errors', '1');
 require_once("../db/connect.php");
 
 $merchantId = '256624093066025';
-$secretkey = 'OPAYPRV17277085871070.5999657476412334';
+$secretkey = 'OPAYPRV17379776265330.6274274823699484';
+// Test - 'OPAYPRV17277085871070.5999657476412334'
 $url = 'https://testapi.opaycheckout.com/api/v1/international/cashier/status';
 
 $reference = trim($_GET['ref']);
