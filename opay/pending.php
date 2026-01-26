@@ -4,10 +4,11 @@ ini_set('display_errors', '1');
 
 require_once("../db/connect.php");
 
-$merchantId = '256624093066025';
+$merchantId = '256625012791839';//'256624093066025'
 $secretkey = 'OPAYPRV17379776265330.6274274823699484';
 // Test - 'OPAYPRV17277085871070.5999657476412334'
-$url = 'https://testapi.opaycheckout.com/api/v1/international/cashier/status';
+$url = 'https://liveapi.opaycheckout.com/api/v1/international/cashier/status';
+// 'https://testapi.opaycheckout.com/api/v1/international/cashier/status'
 
 $reference = trim($_GET['ref']);
 
@@ -118,8 +119,12 @@ if ($reference !== ''){
             // Send notification to MeridianBet
             $curl = curl_init();
 
+            // Staging: https://payments-stage.meridianbet.com/proxy/notify/{paymentId}
+
+            // Live: https://prizma.meridianbet.com/proxy/notify/{paymentId}
+
             curl_setopt_array($curl, [
-                CURLOPT_URL            => "https://payments-stage.meridianbet.com/proxy/notify/" . $record['payment_id'],
+                CURLOPT_URL            => "https://prizma.meridianbet.com/proxy/notify/" . $record['payment_id'],
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_CUSTOMREQUEST  => "POST",
                 CURLOPT_HTTPHEADER     => ["Content-Type: application/json"],
