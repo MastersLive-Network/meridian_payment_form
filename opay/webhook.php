@@ -120,10 +120,10 @@ curl_close($curl);
 // 6. Save Prizma request
 $stmt = $con->prepare(
     "UPDATE opay_deposit 
-     SET notify_prizma_req = ?, status = 'COMPLETED' 
+     SET notify_prizma_req = ?, prizma_res = ?, status = 'COMPLETED' 
      WHERE payment_id = ?"
 );
-$stmt->bind_param("ss", $prizmaReqJson, $reference);
+$stmt->bind_param("sss", $prizmaReqJson, $response, $reference);
 $stmt->execute();
 
 // 7. END
