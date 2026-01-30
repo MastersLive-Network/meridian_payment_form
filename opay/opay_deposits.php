@@ -20,6 +20,27 @@ ORDER BY id DESC
 ";
 
 $result = mysqli_query($con, $query);
+
+
+// Metrics
+$statsQuery = "
+    SELECT 
+        COUNT(*) AS total_rows,
+        SUM(amount) AS total_amount
+    FROM opay_deposit
+";
+
+$statsRes = mysqli_query($con, $statsQuery);
+
+$total_rows = 0;
+$total_amount = 0;
+
+if ($statsRes && mysqli_num_rows($statsRes) > 0) {
+    $stats = mysqli_fetch_assoc($statsRes);
+    $total_rows = (int) $stats['total_rows'];
+    $total_amount = (float) $stats['total_amount'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,8 +113,23 @@ $result = mysqli_query($con, $query);
 </head>
 <body class="bg-light">
 
-<div class="container mt-4">
-    <div class="card shadow p-4">
+<div class="container mt-4"><br /><br /><br /><br />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card shadow p-4">
+                <small class="text-muted">Total Payment Records</small>
+                <h2 class="bold"><?= number_format($total_rows) ?></h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow p-4">
+                <small class="text-muted">Total Payment Records</small>
+                <h2 class="bold">&#8358;<?= number_format($total_amount,2) ?></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mt-4 p-4">
         <div class="card-body">
 
             <h3 class="mb-4">Opay Deposit Records</h3>
@@ -177,7 +213,7 @@ $(document).ready(function () {
 
     /* DataTable init */
     const table = $('#opayTable').DataTable({
-        pageLength: 25,
+        pageLength: 10,
         lengthMenu: [10, 25, 50, 100],
         order: [[0, 'desc']], // ID desc
         responsive: true,
