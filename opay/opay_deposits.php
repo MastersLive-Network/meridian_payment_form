@@ -121,7 +121,7 @@ if ($statsRes && mysqli_num_rows($statsRes) > 0) {
                 <h2 class="bold"><?= number_format($total_rows) ?></h2>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card shadow p-4">
                 <small class="text-muted">Total Payment Records</small>
                 <h2 class="bold">&#8358;<?= number_format($total_amount,2) ?></h2>
