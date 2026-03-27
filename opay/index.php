@@ -9,7 +9,7 @@
 <body>
     
     <div>
-        <div class="text-center p-4 mb-40">
+        <div class="text-center p-4 mt-60 mb-40">
             <img src="opay_transparent.png" class="logo__" alt="">
         </div>
 
