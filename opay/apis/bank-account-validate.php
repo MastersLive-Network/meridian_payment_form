@@ -37,8 +37,8 @@ EOD;
 
 //  Request payload (same as Postman)
 $data = [
-    "accountBankCode" => "111",
-    "accountNo" => "2215381176"
+    "accountBankCode" => $_POST['accountBankCode'],
+    "accountNo" => $_POST['accountNo']
 ];
 
 // IMPORTANT: must match Postman exactly

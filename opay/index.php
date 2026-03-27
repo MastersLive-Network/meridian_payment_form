@@ -233,11 +233,10 @@ if ($num_ < 1){
             });
 
 
-            let typingTimer;
             let lastRequest = "";
 
             function validateBankAccount() {
-                let accountNo = $('.formc').val().trim();
+                let accountNo = $('.recipient_bank_account').val().trim();
                 let bankCode = $('#mySelect').val();
 
                 // Must have both
@@ -260,7 +259,7 @@ if ($num_ < 1){
 
                 // API Call
                 $.ajax({
-                    url: "[base_url]/bank-account-validate.php",
+                    url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-account-validate.php",
                     type: "POST",
                     dataType: "json",
                     data: {
@@ -293,7 +292,7 @@ if ($num_ < 1){
                 });
             }
 
-            // 🔹 Trigger on account input (debounced)
+            //  Trigger on account input (debounced)
             $('.recipient_bank_account').on('input', function () {
 
                 // Only numbers
@@ -306,7 +305,7 @@ if ($num_ < 1){
                 }, 500);
             });
 
-            // 🔹 Trigger when bank changes
+            //  Trigger when bank changes
             $('#mySelect').on('change', function () {
                 validateBankAccount();
             });
