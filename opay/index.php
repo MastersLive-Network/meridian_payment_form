@@ -73,8 +73,9 @@ if ($num_ < 1){
 
                 <div class="bank_validation"></div>
 
-                <button class="rrd" type="submit" name="withdraw_bank">Withdraw NGN<?= number_format($record['amount'], 2) ?></button>
-                
+                <div class="text-center">
+                    <button class="rrd" type="submit" name="withdraw_bank" id="withdraw_bank">Withdraw NGN<?= number_format($record['amount'], 2) ?></button>
+                </div>
             </div>
             <input class="input" name="tabs" type="radio" id="tab-2" />
             <label class="label" for="tab-2">Opay Wallet</label>
@@ -88,7 +89,9 @@ if ($num_ < 1){
 
                 <div class="opay_validation"></div>
 
-                <button class="rrd" type="submit" name="withdraw_wallet">Withdraw NGN<?= number_format($record['amount'], 2) ?></button>
+                <div class="text-center">
+                    <button class="rrd" type="submit" name="withdraw_wallet" id="withdraw_wallet">Withdraw NGN<?= number_format($record['amount'], 2) ?></button>
+                </div>
 
             </div>
         </div>
@@ -98,7 +101,7 @@ if ($num_ < 1){
                 Wrong amount entered for withdrawal?
             </section>
 
-            <button class="rrd darkrrd">Cancel Withdrawal</button>
+            <a href="opay_withdrawal_cancel?u=<?= $_GET['u'] ?>" class="darkrrd">Cancel Withdrawal</a>
         </div>
     </div>
 
@@ -197,6 +200,9 @@ if ($num_ < 1){
                             </div>
                         `);
 
+                        $("#withdraw_wallet").hide();
+
+
                         // API Call
                         $.ajax({
                             url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/opay-wallet-validate.php",
@@ -213,12 +219,18 @@ if ($num_ < 1){
                                             ${res.data.firstName + ' ' + res.data.lastName || 'Account Verified'}
                                         </div>
                                     `);
+
+                                    $("#withdraw_wallet").show();
+
                                 } else {
                                     $('.opay_validation').html(`
                                         <div class="alert-error">
                                             ${res.message}
                                         </div>
                                     `);
+
+                                    $("#withdraw_wallet").hide();
+
                                 }
                             },
                             error: function () {
@@ -227,6 +239,8 @@ if ($num_ < 1){
                                         Failed to validate account
                                     </div>
                                 `);
+                                $("#withdraw_wallet").hide();
+
                             }
                         });
 
@@ -263,6 +277,8 @@ if ($num_ < 1){
                     </div>
                 `);
 
+                $("#withdraw_bank").hide();
+
                 // API Call
                 $.ajax({
                     url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-account-validate.php",
@@ -288,6 +304,9 @@ if ($num_ < 1){
                                 </div>
                             `);
                         }
+
+                        $("#withdraw_bank").show();
+
                     },
                     error: function () {
                         $('.bank_validation').html(`
@@ -295,6 +314,9 @@ if ($num_ < 1){
                                 Failed to validate account
                             </div>
                         `);
+
+                        $("#withdraw_bank").hide();
+
                     }
                 });
             }

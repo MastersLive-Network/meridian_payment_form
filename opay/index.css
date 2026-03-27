@@ -248,6 +248,7 @@ p {
     border: transparent;
     border-radius: 10px;
     transition: all linear .4s;
+    display: none;
 }
 
 .rrd:hover{
@@ -255,14 +256,16 @@ p {
 }
 
 .darkrrd{
-    margin-top: 20px;
-    background-color: #303030;
-    padding: 15px 25px;
-    color: #fff;
-    font-size: 16px;
-    border: transparent;
-    border-radius: 10px;
-    transition: all linear .4s;
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #303030;
+  padding: 15px 25px;
+  color: #fff;
+  font-size: 16px;
+  border: transparent;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all linear .4s;
 }
 
 .darkrrd:hover{
