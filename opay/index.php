@@ -19,7 +19,7 @@ require "../db/connect.php";
 
 //get details of transaction
 $code = $_GET['u'] ?? '';
-$query_ = "SELECT * FROM korapay_withdrawal WHERE payment_reference='$code'";
+$query_ = "SELECT * FROM opay_withdrawal WHERE payment_reference='$code'";
 $result_ = mysqli_query($con, $query_);
 $num_ = $result_->num_rows;
 $record = [];
