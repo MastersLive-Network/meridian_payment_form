@@ -1,3 +1,38 @@
+<?php
+session_set_cookie_params([
+    'samesite' => 'None',
+    'secure' => true, // required for SameSite=None
+]);
+
+@session_start();
+
+// Disable browser caching
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+require "../db/connect.php";
+
+//get details of transaction
+$code = $_GET['u'] ?? '';
+$query_ = "SELECT * FROM korapay_withdrawal WHERE payment_reference='$code'";
+$result_ = mysqli_query($con, $query_);
+$num_ = $result_->num_rows;
+$record = [];
+
+if ($num_ < 1){
+    //does not exist, show error
+
+} else{
+    $record = mysqli_fetch_assoc($result_);
+}
+
+?>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,7 +50,7 @@
 
         <div class="text-center mb-40">
             <section class="opacity5">You are withdrawing:</section>
-            <h1 class="amount"><span>&#8358;</span>2,500</section>
+            <h1 class="amount"><span>&#8358;</span><?= number_format($record['amount'], 2) ?></section>
         </div>
 
         <div class="tabs">
