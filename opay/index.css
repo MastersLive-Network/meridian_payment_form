@@ -257,21 +257,33 @@ p {
 .alert-success{
   background: #edfbf6;
   color: #32d296;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .alert-error{
   background: #fef4f6;
   color: #f0506e;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .alert-warning{
   background: #fff6ee;
   color: #faa05a;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .alert-info{
   background: #d8eafc;
   color: #1e87f0;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .spinner {

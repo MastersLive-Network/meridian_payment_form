@@ -35,9 +35,9 @@ NjzGPJuyQ1Nks/mh/4x7
 -----END PRIVATE KEY-----
 EOD;
 
-//  Request payload (same as Postman)
+//  Request payload
 $data = [
-    "phone" => "1129000042"
+    "phone" => $_POST['phone_account']
 ];
 
 // MUST match Postman exactly
