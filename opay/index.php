@@ -43,7 +43,7 @@ if ($num_ < 1){
 </head>
 <body>
     
-    <div>
+    <div><br />
         <div class="text-center p-4 mt-100 mb-40">
             <img src="opay_transparent.png" class="logo__" alt="">
         </div>
