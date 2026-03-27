@@ -44,11 +44,11 @@ if ($num_ < 1){
 <body>
     
     <div>
-        <div class="text-center p-4 mt-60 mb-40">
+        <div class="text-center p-4 mt-100 mb-40">
             <img src="opay_transparent.png" class="logo__" alt="">
         </div>
 
-        <div class="text-center mb-40">
+        <div class="text-center mb-40" style="margin-top: -20px !important">
             <section class="opacity5">You are withdrawing:</section>
             <h1 class="amount"><span>&#8358;</span><?= number_format($record['amount'], 2) ?></section>
         </div>
