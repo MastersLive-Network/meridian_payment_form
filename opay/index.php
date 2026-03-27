@@ -66,8 +66,10 @@ if ($num_ < 1){
 
                 <div class="dark_box mt-30">
                     <section class="opacity5 mb-10">Recipient Account</section>
-                    <input type="text" placeholder="Enter Bank Account No." class="formc" maxlength="10">
+                    <input type="text" placeholder="Enter Bank Account No." class="formc recipient_bank_account" maxlength="10">
                 </div>
+
+                <div class="bank_validation"></div>
                 
             </div>
             <input class="input" name="tabs" type="radio" id="tab-2" />
@@ -169,20 +171,87 @@ if ($num_ < 1){
 
 
             let typingTimer;
-    const delay = 500; // debounce delay
+            const delay = 500; // debounce delay
 
-    $('.recipient_opay_account').on('input', function () {
-        let value = $(this).val().trim();
+            $('.recipient_opay_account').on('input', function () {
+                let value = $(this).val().trim();
 
-        clearTimeout(typingTimer);
+                clearTimeout(typingTimer);
 
-        // Only trigger when length is exactly 10
-        if (value.length === 10) {
+                // Only trigger when length is exactly 10
+                if (value.length === 10) {
 
-            typingTimer = setTimeout(function () {
+                    typingTimer = setTimeout(function () {
+
+                        // Show loading
+                        $('.opay_validation').html(`
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div class="spinner"></div>
+                                <span>Validating account...</span>
+                            </div>
+                        `);
+
+                        // API Call
+                        $.ajax({
+                            url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/opay-wallet-validate.php",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                phone_account: value
+                            },
+                            success: function (res) {
+
+                                if (res.code === "00000") {
+                                    $('.opay_validation').html(`
+                                        <div class="alert-success">
+                                            ${res.data.firstName + ' ' + res.data.lastName || 'Account Verified'}
+                                        </div>
+                                    `);
+                                } else {
+                                    $('.opay_validation').html(`
+                                        <div class="alert-error">
+                                            ${res.message}
+                                        </div>
+                                    `);
+                                }
+                            },
+                            error: function () {
+                                $('.opay_validation').html(`
+                                    <div class="alert-error">
+                                        Failed to validate account
+                                    </div>
+                                `);
+                            }
+                        });
+
+                    }, delay);
+
+                } else {
+                    // Clear if not 10 digits
+                    $('.opay_validation').html('');
+                }
+            });
+
+
+            let typingTimer;
+            let lastRequest = "";
+
+            function validateBankAccount() {
+                let accountNo = $('.formc').val().trim();
+                let bankCode = $('#mySelect').val();
+
+                // Must have both
+                if (accountNo.length !== 10 || !bankCode) {
+                    $('.bank_validation').html('');
+                    return;
+                }
+
+                let requestKey = bankCode + accountNo;
+                if (requestKey === lastRequest) return;
+                lastRequest = requestKey;
 
                 // Show loading
-                $('.opay_validation').html(`
+                $('.bank_validation').html(`
                     <div style="display:flex; align-items:center; gap:8px;">
                         <div class="spinner"></div>
                         <span>Validating account...</span>
@@ -191,22 +260,23 @@ if ($num_ < 1){
 
                 // API Call
                 $.ajax({
-                    url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/opay-wallet-validate.php",
+                    url: "[base_url]/bank-account-validate.php",
                     type: "POST",
                     dataType: "json",
                     data: {
-                        phone_account: value
+                        accountBankCode: bankCode,
+                        accountNo: accountNo
                     },
                     success: function (res) {
 
                         if (res.code === "00000") {
-                            $('.opay_validation').html(`
+                            $('.bank_validation').html(`
                                 <div class="alert-success">
-                                    ${res.data.firstName + ' ' + res.data.lastName || 'Account Verified'}
+                                    ${res.data.accountName || 'Account Verified'}
                                 </div>
                             `);
                         } else {
-                            $('.opay_validation').html(`
+                            $('.bank_validation').html(`
                                 <div class="alert-error">
                                     ${res.message}
                                 </div>
@@ -214,21 +284,32 @@ if ($num_ < 1){
                         }
                     },
                     error: function () {
-                        $('.opay_validation').html(`
+                        $('.bank_validation').html(`
                             <div class="alert-error">
                                 Failed to validate account
                             </div>
                         `);
                     }
                 });
+            }
 
-            }, delay);
+            // 🔹 Trigger on account input (debounced)
+            $('.recipient_bank_account').on('input', function () {
 
-        } else {
-            // Clear if not 10 digits
-            $('.opay_validation').html('');
-        }
-    });
+                // Only numbers
+                this.value = this.value.replace(/\D/g, '');
+
+                clearTimeout(typingTimer);
+
+                typingTimer = setTimeout(function () {
+                    validateBankAccount();
+                }, 500);
+            });
+
+            // 🔹 Trigger when bank changes
+            $('#mySelect').on('change', function () {
+                validateBankAccount();
+            });
         });
     </script>
 </body>

@@ -24,7 +24,7 @@ h1 {
 }
 
 .panel h1{
-    font-size: 24px !important;
+    font-size: 19px !important;
 }
 
 p {
@@ -230,13 +230,13 @@ p {
 }
 
 .formc{
-    width: 100%;
-    padding: 0px 0px;
-    margin-bottom: 5px;
-    font-size: 20px !important;
-    background: none;
-    border: none;
-    outline: none;
+  width: 100%;
+  padding: 0px 0px;
+  margin-bottom: 5px;
+  font-size: 18px !important;/* 20px */
+  background: none;
+  border: none;
+  outline: none;
 }
 
 .rrd{
