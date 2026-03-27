@@ -66,7 +66,7 @@ if ($num_ < 1){
 
                 <div class="dark_box mt-30">
                     <section class="opacity5 mb-10">Recipient Account</section>
-                    <input type="text" placeholder="Enter Bank Account No." class="formc">
+                    <input type="text" placeholder="Enter Bank Account No." class="formc" maxlength="10">
                 </div>
                 
             </div>
@@ -77,8 +77,10 @@ if ($num_ < 1){
 
                 <div class="dark_box mt-30">
                     <section class="opacity5 mb-10">Recipient Account</section>
-                    <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc">
+                    <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account">
                 </div>
+
+                <div class="opay_validation"></div>
 
             </div>
         </div>
@@ -109,6 +111,10 @@ if ($num_ < 1){
                 templateResult: formatOption,
                 templateSelection: formatOption,
                 placeholder: "Select a bank"
+            });
+
+            $('.formc').on('input', function () {
+                this.value = this.value.replace(/\D/g, '');
             });
 
             // Fetch bank list
@@ -160,6 +166,69 @@ if ($num_ < 1){
                     </div>
                 `);
             }
+
+
+            let typingTimer;
+    const delay = 500; // debounce delay
+
+    $('.recipient_opay_account').on('input', function () {
+        let value = $(this).val().trim();
+
+        clearTimeout(typingTimer);
+
+        // Only trigger when length is exactly 10
+        if (value.length === 10) {
+
+            typingTimer = setTimeout(function () {
+
+                // Show loading
+                $('.opay_validation').html(`
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="spinner"></div>
+                        <span>Validating account...</span>
+                    </div>
+                `);
+
+                // API Call
+                $.ajax({
+                    url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/opay-wallet-validate.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        phone_account: value
+                    },
+                    success: function (res) {
+
+                        if (res.code === "00000") {
+                            $('.opay_validation').html(`
+                                <div class="alert-success">
+                                    ${res.data.firstName + ' ' + res.data.lastName || 'Account Verified'}
+                                </div>
+                            `);
+                        } else {
+                            $('.opay_validation').html(`
+                                <div class="alert-error">
+                                    ${res.message}
+                                </div>
+                            `);
+                        }
+                    },
+                    error: function () {
+                        $('.opay_validation').html(`
+                            <div class="alert-error">
+                                Failed to validate account
+                            </div>
+                        `);
+                    }
+                });
+
+            }, delay);
+
+        } else {
+            // Clear if not 10 digits
+            $('.opay_validation').html('');
+        }
+    });
         });
     </script>
 </body>

@@ -10,11 +10,6 @@ $(function(){
             xhr.setRequestHeader ("Authorization", "Bearer sk_live_0a8f380e5208f5723a7383c5c7de54e81ca9ee4c");//live paystack key removed
         },
         success: function(data) {
-            // console.log(data);
-            // console.log(data.message);
-
-            // var data_ = JSON.parse(jQuery.trim(data));
-            // console.log("response", data_);
 
             var datax = data.data;
             var options = '<option value="">-- select bank --</option>';
