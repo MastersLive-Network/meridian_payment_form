@@ -87,6 +87,7 @@ if ($num_ < 1){
                     <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account">
                 </div>
 
+                <input type="hidden" name="wallet_name" id="wallet_name">
                 <div class="opay_validation"></div>
 
                 <div class="text-center">
@@ -101,7 +102,7 @@ if ($num_ < 1){
                 Wrong amount entered for withdrawal?
             </section>
 
-            <a href="opay_withdrawal_cancel?u=<?= $_GET['u'] ?>" class="darkrrd">Cancel Withdrawal</a>
+            <a href="opay_withdrawal_cancel.php?u=<?= $_GET['u'] ?>" class="darkrrd">Cancel Withdrawal</a>
         </div>
     </div>
 
@@ -220,6 +221,7 @@ if ($num_ < 1){
                                         </div>
                                     `);
 
+                                    $("#wallet_name").val(res.data.firstName + ' ' + res.data.lastName);
                                     $("#withdraw_wallet").show();
 
                                 } else {
