@@ -97,68 +97,70 @@ if ($num_ < 1){
     <script src="index-v1.1.js" type="text/javascript"></script>
 
     <script>
-        $('#mySelect').select2({
-            width: '100%'
-        });
+        $(document).ready(function () {
+            $('#mySelect').select2({
+                width: '100%'
+            });
 
-        $('#mySelect').select2({
-            minimumResultsForSearch: 0,
-            dropdownCssClass: "antd-dropdown",
-            selectionCssClass: "antd-selection",
-            templateResult: formatOption,
-            templateSelection: formatOption,
-            placeholder: "Select a bank"
-        });
+            $('#mySelect').select2({
+                minimumResultsForSearch: 0,
+                dropdownCssClass: "antd-dropdown",
+                selectionCssClass: "antd-selection",
+                templateResult: formatOption,
+                templateSelection: formatOption,
+                placeholder: "Select a bank"
+            });
 
-        // Fetch bank list
-        $.ajax({
-            url: "http://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-lists.php",
-            type: "GET",
-            dataType: "json",
-            success: function (response) {
+            // Fetch bank list
+            $.ajax({
+                url: "http://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-lists.php",
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
 
-                $("#load_banks").html("");
+                    $("#load_banks").html("");
 
-                if (response.code === "00000") {
+                    if (response.code === "00000") {
 
-                    let banks = response.data;
+                        let banks = response.data;
 
-                    // Clear existing options
-                    $('#mySelect').empty();
+                        // Clear existing options
+                        $('#mySelect').empty();
 
-                    // Add placeholder
-                    $('#mySelect').append(`<option></option>`);
+                        // Add placeholder
+                        $('#mySelect').append(`<option></option>`);
 
-                    // Loop and append
-                    banks.forEach(function (bank) {
-                        $('#mySelect').append(
-                            `<option value="${bank.bankCode}">${bank.bankName}</option>`
-                        );
-                    });
+                        // Loop and append
+                        banks.forEach(function (bank) {
+                            $('#mySelect').append(
+                                `<option value="${bank.bankCode}">${bank.bankName}</option>`
+                            );
+                        });
 
-                    // Refresh Select2
-                    $('#mySelect').trigger('change');
-                } else {
-                    console.error("API Error:", response.message);
+                        // Refresh Select2
+                        $('#mySelect').trigger('change');
+                    } else {
+                        console.error("API Error:", response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $("#load_banks").html("");
+                    console.error("Request failed:", error);
                 }
-            },
-            error: function (xhr, status, error) {
-                $("#load_banks").html("");
-                console.error("Request failed:", error);
+            });
+
+            function formatOption(option) {
+                if (!option.id) return option.text;
+
+                const img = $(option.element).data('image');
+
+                return $(`
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span>${option.text}</span>
+                    </div>
+                `);
             }
         });
-
-        function formatOption(option) {
-            if (!option.id) return option.text;
-
-            const img = $(option.element).data('image');
-
-            return $(`
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span>${option.text}</span>
-                </div>
-            `);
-        }
     </script>
 </body>
 </html>
