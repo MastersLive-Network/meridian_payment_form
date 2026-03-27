@@ -1,6 +1,7 @@
 <?php
 
 header('Content-Type: application/json'); // <-- JSON response header
+header("Access-Control-Allow-Origin: *");
 
 $privateKey = <<<EOD
 -----BEGIN PRIVATE KEY-----

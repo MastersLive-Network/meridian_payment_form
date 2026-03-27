@@ -113,7 +113,7 @@ if ($num_ < 1){
 
             // Fetch bank list
             $.ajax({
-                url: "http://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-lists.php",
+                url: "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-lists.php",
                 type: "GET",
                 dataType: "json",
                 success: function (response) {
