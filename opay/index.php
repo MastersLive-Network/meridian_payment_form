@@ -69,7 +69,11 @@ if ($num_ < 1){
                     <input type="text" placeholder="Enter Bank Account No." class="formc recipient_bank_account" maxlength="10">
                 </div>
 
+                <input type="hidden" name="account_name" id="account_name">
+
                 <div class="bank_validation"></div>
+
+                <button class="rrd" type="submit" name="withdraw_bank">Withdraw NGN<?= number_format($record['amount'], 2) ?></button>
                 
             </div>
             <input class="input" name="tabs" type="radio" id="tab-2" />
@@ -84,6 +88,8 @@ if ($num_ < 1){
 
                 <div class="opay_validation"></div>
 
+                <button class="rrd" type="submit" name="withdraw_wallet">Withdraw NGN<?= number_format($record['amount'], 2) ?></button>
+
             </div>
         </div>
 
@@ -92,7 +98,7 @@ if ($num_ < 1){
                 Wrong amount entered for withdrawal?
             </section>
 
-            <button class="rrd">Cancel Withdrawal</button>
+            <button class="rrd darkrrd">Cancel Withdrawal</button>
         </div>
     </div>
 
@@ -274,6 +280,7 @@ if ($num_ < 1){
                                     ${res.data.accountName || 'Account Verified'}
                                 </div>
                             `);
+                            $('#account_name').val(res.data.accountName);
                         } else {
                             $('.bank_validation').html(`
                                 <div class="alert-error">

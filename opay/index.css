@@ -254,6 +254,21 @@ p {
     background-color: #158c6c;
 }
 
+.darkrrd{
+    margin-top: 20px;
+    background-color: #303030;
+    padding: 15px 25px;
+    color: #fff;
+    font-size: 16px;
+    border: transparent;
+    border-radius: 10px;
+    transition: all linear .4s;
+}
+
+.darkrrd:hover{
+    background-color: #080808;
+}
+
 .alert-success{
   background: #edfbf6;
   color: #32d296;
