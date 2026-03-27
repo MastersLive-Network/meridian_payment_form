@@ -60,10 +60,8 @@ if ($num_ < 1){
                 <h1>Send Money to Other Banks</h1>
 
                 <section class="opacity5 mt-30 mb-10">Select Destination Bank</section>
-                <select id="mySelect" style="width: 100%;">
-                    <option value="ng" data-image="https://flagcdn.com/w40/ng.png">Nigeria</option>
-                    <option value="us" data-image="https://flagcdn.com/w40/us.png">USA</option>
-                </select>
+                <select id="mySelect" style="width: 100%;"></select>
+                <small id="load_banks">Loading Banks...</small>
 
 
                 <div class="dark_box mt-30">
@@ -96,36 +94,58 @@ if ($num_ < 1){
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="index-v1.1.js" type="text/javascript"></script>
 
     <script>
         $('#mySelect').select2({
             width: '100%'
         });
 
-        // $('#mySelect').select2({
-        //     templateResult: formatOption,
-        //     templateSelection: formatOption
-        // });
-
-        // function formatOption(option) {
-        //     if (!option.id) return option.text;
-
-        //     var img = $(option.element).data('image');
-
-        //     return $(`
-        //         <span>
-        //         <img src="${img}" style="width:20px; margin-right:8px;" />
-        //         ${option.text}
-        //         </span>
-        //     `);
-        // }
-
         $('#mySelect').select2({
             minimumResultsForSearch: 0,
             dropdownCssClass: "antd-dropdown",
             selectionCssClass: "antd-selection",
             templateResult: formatOption,
-            templateSelection: formatOption
+            templateSelection: formatOption,
+            placeholder: "Select a bank"
+        });
+
+        // Fetch bank list
+        $.ajax({
+            url: "http://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/bank-lists.php",
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+
+                $("#load_banks").html("");
+
+                if (response.code === "00000") {
+
+                    let banks = response.data;
+
+                    // Clear existing options
+                    $('#mySelect').empty();
+
+                    // Add placeholder
+                    $('#mySelect').append(`<option></option>`);
+
+                    // Loop and append
+                    banks.forEach(function (bank) {
+                        $('#mySelect').append(
+                            `<option value="${bank.bankCode}">${bank.bankName}</option>`
+                        );
+                    });
+
+                    // Refresh Select2
+                    $('#mySelect').trigger('change');
+                } else {
+                    console.error("API Error:", response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                $("#load_banks").html("");
+                console.error("Request failed:", error);
+            }
         });
 
         function formatOption(option) {
@@ -134,9 +154,8 @@ if ($num_ < 1){
             const img = $(option.element).data('image');
 
             return $(`
-                <div class="antd-option">
-                <img src="${img}" />
-                <span>${option.text}</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span>${option.text}</span>
                 </div>
             `);
         }
