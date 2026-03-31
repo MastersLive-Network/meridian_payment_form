@@ -68,7 +68,7 @@ $amount = 0;
 
 if ($num>0){
     $rr = mysqli_fetch_assoc($result);
-    $amount = $r['amount'];
+    $amount = (int) $r['amount'];
 }
 
 // OPTIONAL: amount (default fallback)
@@ -86,7 +86,7 @@ $data = [
         "accountName" => $account_name,
         "accountBankCode" => $bank_code
     ],
-    "amount" => $amount,
+    "amount" => (int) $amount,
     "currency" => "NGN",
     "payoutType" => "BankTransfer",
     "notifyUrl" => "https://korapay.meridianbet.com/processor/meridian_payment_form/opay/apis/withdrawal_webhook.php",
@@ -204,7 +204,7 @@ function showUI($type, $message, $data = [])
         $details .= "<p><strong>Status:</strong> {$data['orderStatus']}</p>";
     }
 
-    return "
+    echo "
     <!DOCTYPE html>
     <html>
     <head>
