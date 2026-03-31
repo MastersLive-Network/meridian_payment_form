@@ -242,5 +242,3 @@ function showUI($type, $message, $data = [])
     </html>
     ";
 }
-
-echo $amount;
