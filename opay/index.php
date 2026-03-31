@@ -67,7 +67,7 @@ if ($num_ < 1){
 
                     <div class="dark_box mt-30">
                         <section class="opacity5 mb-10">Recipient Account</section>
-                        <input type="text" placeholder="Enter Bank Account No." class="formc recipient_bank_account" name="account_number" maxlength="10">
+                        <input autocomplete="off" type="text" placeholder="Enter Bank Account No." class="formc recipient_bank_account" name="account_number" maxlength="10">
                     </div>
 
                     <input type="hidden" name="payment_reference" value="<?= $code ?>">
@@ -88,7 +88,7 @@ if ($num_ < 1){
                 <form action="apis/withdraw_money.php" method="post">
                     <div class="dark_box mt-30">
                         <section class="opacity5 mb-10">Recipient Account</section>
-                        <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account" name="account_number">
+                        <input autocomplete="off" type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account" name="account_number">
                     </div>
 
                     <input type="hidden" name="bank_code" value="305">
@@ -307,7 +307,7 @@ if ($num_ < 1){
                             `);
                             $('#account_name').val(res.data.accountName);
                             $("#withdraw_bank").show();
-                            
+
                         } else {
                             $('.bank_validation').html(`
                                 <div class="alert-error">
