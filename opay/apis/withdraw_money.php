@@ -219,6 +219,10 @@ function showUI($type, $message, $data = [])
                 font-family: 'koo-bold';
                 src: url(../../fonts/Montserrat-Bold.ttf);
             }
+            @font-face {
+                font-family: 'koo-semibold';
+                src: url(../../fonts/Montserrat-SemiBold.ttf);
+            }
             *{
                 font-family: 'koo-light' !important;
                 font-size: 14px !important;
@@ -268,7 +272,7 @@ function showUI($type, $message, $data = [])
                 color: '#333';
                 padding: 30px;
                 border-radius: 5px;
-                width: 350px;
+                width: 450px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
             }
             h2 {
@@ -288,7 +292,7 @@ function showUI($type, $message, $data = [])
                 text-align: center;
             }
             th{
-                font-family: 'koo-bold';
+                font-family: 'koo-semibold' !important;
             }
             img {
                 max-width: 30px;
