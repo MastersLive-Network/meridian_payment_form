@@ -59,7 +59,7 @@ if ($num_ < 1){
             <div class="panel">
                 <h1>Send Money to Other Banks</h1>
 
-                <form action="withdraw_money.php" method="post">
+                <form action="apis/withdraw_money.php" method="post">
                     <section class="opacity5 mt-30 mb-10">Select Destination Bank</section>
                     <select id="mySelect" style="width: 100%;" name="bank_code"></select>
                     <small id="load_banks">Loading Banks...</small>
@@ -85,7 +85,7 @@ if ($num_ < 1){
             <div class="panel">
                 <h1>Send Money to Opay Wallet</h1>
 
-                <form action="withdraw_money.php" method="post">
+                <form action="apis/withdraw_money.php" method="post">
                     <div class="dark_box mt-30">
                         <section class="opacity5 mb-10">Recipient Account</section>
                         <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account">
