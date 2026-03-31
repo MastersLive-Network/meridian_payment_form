@@ -215,6 +215,10 @@ function showUI($type, $message, $data = [])
                 font-family: 'koo-light';
                 src: url(../../fonts/Montserrat-Light.ttf);
             }
+            @font-face {
+                font-family: 'koo-bold';
+                src: url(../../fonts/Montserrat-Bold.ttf);
+            }
             *{
                 font-family: 'koo-light' !important;
                 font-size: 14px !important;
@@ -236,13 +240,17 @@ function showUI($type, $message, $data = [])
                 color: '#333';
                 padding: 30px;
                 border-radius: 5px;
-                text-align: center;
                 width: 350px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
             }
             h2 {
                 margin-bottom: 10px;
                 font-weight: bold;
+                font-size: 18px !important;
+                text-align: center;
+                padding: 10px;
+                margin-top: -15px;
+                font-family: 'koo-bold' !important;
             }
             p {
                 margin: 5px 0;

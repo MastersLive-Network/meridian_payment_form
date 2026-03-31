@@ -126,6 +126,53 @@ if ($result->num_rows > 0){
         ),
         ));
 
+
+        print '{
+        "paymentId": "'.$paymentId.'",
+        "paymentType": "WITHDRAW",
+        "accountId": "'.$accountId.'",
+        "amount": '.$amount__.',
+        "currencyCode": "'.$p_request['currencyCode'].'",
+        "createTimestamp": '.$timestamp.',
+        "status": "NEW_RESERVATION",
+        "customerParams": {
+            "customerBirthdate": "1993-02-08",
+            "customerPhone": "'.$p_request['customerParams']['customerPhone'].'",
+            "clientLanguage": "en",
+            "customerPersonalId": "",
+            "customerEmail": "vladapen1@test.com",
+            "customerFirstName": "'.$p_request['customerParams']['customerFirstName'].'",
+            "currency": "'.$p_request['customerParams']['currency'].'",
+            "customerLastName": "'.$p_request['customerParams']['customerLastName'].'",
+            "bankId": "",
+            "documentType": "",
+            "documentValue": "",
+            "accountType": "SAVING",
+            "accountNumber": "'.$record['account_number'].'",
+            "cci": "'.$record['bank_code'].'"
+        },
+        "processorParams": {
+            "plutusSubmitUrl": "'.$p_request['processorParams']['plutusSubmitUrl'].'",
+            "accountNumberRegex": ".*",
+            "cciRegex": ".*",
+            "test": "test",
+            "withdrawUrl": "'.$p_request['processorParams']['withdrawUrl'].'",
+            "banksUrl": "'.$p_request['processorParams']['banksUrl'].'",
+            "plutusBanksUrl": "'.$p_request['processorParams']['plutusBanksUrl'].'",
+            "documentNumberRegex": ".*",
+            "clientExternalId": "'.$p_request['processorParams']['clientExternalId'].'"
+        },
+        "inputParams": {
+            "DOCUMENT_TYPE": "",
+            "DOCUMENT_VALUE": "",
+            "ACCOUNT_TYPE": "SAVING",
+            "ACCOUNT_NUMBER": "'.$record['account_number'].'",
+            "NAME_OF_BANK": "'.$bank_name.'",
+            "CCI": "'.$record['bank_code'].'"
+        },
+        "currencyNumericCode": '.$p_request['currencyNumericCode'].'
+        }';
+
         $response = curl_exec($curl);
 
         curl_close($curl);
