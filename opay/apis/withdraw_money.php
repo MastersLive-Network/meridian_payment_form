@@ -181,6 +181,7 @@ function showUI($type, $message, $data = [])
 {
     $color = "#333";
     $bg = "#f5f5f5";
+    $img_type = "<img src='../succ.png' />";
 
     if ($type === "success") {
         $color = "#155724";
@@ -188,6 +189,7 @@ function showUI($type, $message, $data = [])
     } elseif ($type === "error") {
         $color = "#721c24";
         $bg = "#f8d7da";
+        $img_type = "<img src='../err.png' />";
     } elseif ($type === "pending") {
         $color = "#856404";
         $bg = "#fff3cd";
@@ -196,9 +198,11 @@ function showUI($type, $message, $data = [])
     $details = "";
 
     if (!empty($data)) {
-        $details .= "<p><strong>Order No:</strong> {$data['orderNo']}</p>";
-        $details .= "<p><strong>Reference:</strong> {$data['reference']}</p>";
-        $details .= "<p><strong>Status:</strong> {$data['orderStatus']}</p>";
+        $details .= '<table class="table table-striped table-hover"><tbody>';
+        $details .= "<tr><th>Order No</th><td>{$data['orderNo']}</td></tr>";
+        $details .= "<tr><th>Reference</th><td>{$data['reference']}</td></tr>";
+        $details .= "<tr><th>Status</th><td>{$data['orderStatus']}</td></tr>";
+        $details .= "</tbody></table>";
     }
 
     echo "
@@ -207,6 +211,15 @@ function showUI($type, $message, $data = [])
     <head>
         <title>Withdrawal Status</title>
         <style>
+            @font-face {
+                font-family: 'koo-light';
+                src: url(../../fonts/Montserrat-Light.ttf);
+            }
+            *{
+                font-family: 'koo-light' !important;
+                font-size: 14px !important;
+                box-sizing: border-box;
+            }
             body {
                 font-family: Arial;
                 background: #f0f2f5;
@@ -217,24 +230,47 @@ function showUI($type, $message, $data = [])
                 margin: 0;
             }
             .card {
-                background: $bg;
-                color: $color;
+                /* background: $bg; */
+                /* color: $color; */
+                background: '#fff';
+                color: '#333';
                 padding: 30px;
-                border-radius: 10px;
+                border-radius: 5px;
                 text-align: center;
                 width: 350px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
             }
             h2 {
                 margin-bottom: 10px;
+                font-weight: bold;
             }
             p {
                 margin: 5px 0;
+            }
+            .img {
+                padding: 30px;
+                text-align: center;
+            }
+            img {
+                max-width: 30px;
+                margin: 5px !important;
+            }
+            .logo__{
+                max-width: 100px;
+                height: auto;
+            }
+            .text-center{
+                text-align: center;
+            }
+            .p-4{
+                padding: 20px
             }
         </style>
     </head>
     <body>
         <div class='card'>
+            <div class='text-center p-4'><img src='../opay_transparent.png' class='logo__' alt=''></div>
+            <div class='img'>$img_type</div>
             <h2>$message</h2>
             $details
         </div>

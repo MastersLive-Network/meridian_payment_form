@@ -91,7 +91,7 @@ if ($num_ < 1){
                         <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account" name="account_number">
                     </div>
 
-                    <input type="hidden" name="bank_code" value="011">
+                    <input type="hidden" name="bank_code" value="305">
                     <input type="hidden" name="payment_reference" value="<?= $code ?>">
                     <input type="hidden" name="account_name" id="wallet_name">
                     <div class="opay_validation"></div>
