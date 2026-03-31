@@ -88,7 +88,7 @@ if ($num_ < 1){
                 <form action="apis/withdraw_money.php" method="post">
                     <div class="dark_box mt-30">
                         <section class="opacity5 mb-10">Recipient Account</section>
-                        <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account">
+                        <input type="text" placeholder="Phone No./Opay Account No./Name" class="formc recipient_opay_account" name="account_number">
                     </div>
 
                     <input type="hidden" name="bank_code" value="011">
