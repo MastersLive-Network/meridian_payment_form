@@ -306,6 +306,8 @@ if ($num_ < 1){
                                 </div>
                             `);
                             $('#account_name').val(res.data.accountName);
+                            $("#withdraw_bank").show();
+                            
                         } else {
                             $('.bank_validation').html(`
                                 <div class="alert-error">
@@ -313,8 +315,6 @@ if ($num_ < 1){
                                 </div>
                             `);
                         }
-
-                        $("#withdraw_bank").show();
 
                     },
                     error: function () {
