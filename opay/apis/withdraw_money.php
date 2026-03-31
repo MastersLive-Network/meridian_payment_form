@@ -233,6 +233,34 @@ function showUI($type, $message, $data = [])
                 height: 100vh;
                 margin: 0;
             }
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+                font-family: Arial, sans-serif;
+            }
+
+            .table th,
+            .table td {
+                padding: 12px;
+                border: 1px solid #dee2e6;
+                text-align: left;
+            }
+
+            .table thead {
+                background-color: #f8f9fa;
+                font-weight: bold;
+            }
+
+            /* striped rows */
+            .table-striped tbody tr:nth-child(odd) {
+                background-color: #f2f2f2;
+            }
+
+            /* hover effect */
+            .table-hover tbody tr:hover {
+                background-color: #e9ecef;
+                cursor: pointer;
+            }
             .card {
                 /* background: $bg; */
                 /* color: $color; */
@@ -258,6 +286,9 @@ function showUI($type, $message, $data = [])
             .img {
                 padding: 30px;
                 text-align: center;
+            }
+            th{
+                font-family: 'koo-bold';
             }
             img {
                 max-width: 30px;
