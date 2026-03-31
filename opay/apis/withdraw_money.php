@@ -1,6 +1,5 @@
 <?php
 
-header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 
 require_once "../../db/connect.php";
@@ -56,11 +55,8 @@ $account_number = trim($_POST['account_number']);
 $bank_code      = trim($_POST['bank_code']);
 $account_name   = trim($_POST['account_name']);
 
-
 //find amount
-$query = "
-SELECT * FROM opay_withdrawal WHERE payment_reference = '$payment_reference'
-";
+$query = "SELECT * FROM opay_withdrawal WHERE payment_reference='$payment_reference'";
 
 $result = mysqli_query($con, $query);
 $num = mysqli_num_rows($result);
@@ -68,11 +64,12 @@ $amount = 0;
 
 if ($num>0){
     $rr = mysqli_fetch_assoc($result);
-    $amount = (int) $r['amount'];
+    $amount = (int) $rr['amount'];
+
 }
 
 // OPTIONAL: amount (default fallback)
-$amount = $amount * 100; // in kobo
+$amount = (int) ($amount * 100); // in kobo
 
 // GENERATE REFERENCE
 $reference = $payment_reference;
@@ -245,3 +242,5 @@ function showUI($type, $message, $data = [])
     </html>
     ";
 }
+
+echo $amount;
