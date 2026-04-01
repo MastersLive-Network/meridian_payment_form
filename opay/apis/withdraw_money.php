@@ -162,7 +162,8 @@ if ($res['code'] === "00000") {
     $result_ = mysqli_query($con, $query_);
 
     if ($status === "INITIAL") {
-        echo showUI("pending", "Your withdrawal is being processed", $res['data']);
+        echo showUI("pending", "Withdrawal Successful", $res['data']);
+        //Your withdrawal is being processed
     } else {
         echo showUI("success", "Withdrawal successful", $res['data']);
     }
@@ -199,9 +200,11 @@ function showUI($type, $message, $data = [])
 
     if (!empty($data)) {
         $details .= '<table class="table table-striped table-hover"><tbody>';
+        $details .= "<tr><th>Amount</th><td>₦{number_format($amount, 2)}</td></tr>";
         $details .= "<tr><th>Order No</th><td>{$data['orderNo']}</td></tr>";
         $details .= "<tr><th>Reference</th><td>{$data['reference']}</td></tr>";
         $details .= "<tr><th>Status</th><td>{$data['orderStatus']}</td></tr>";
+        $details .= "<tr><th>Transaction Date</th><td>".Date('Y-m-d h:iA')."</td></tr>";
         $details .= "</tbody></table>";
     }
 
