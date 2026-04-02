@@ -34,6 +34,17 @@ p {
   font-size: 20px;
   line-height: 1.5;
 }
+
+.notice{
+  max-width: 500px;
+  background-color: #d09f0a95;
+  color: #856404;
+  padding: 15px 25px;
+  display: flex;
+}
+.notice section{
+  margin-left: 15px;
+}
 .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -87,6 +98,34 @@ p {
 .input:checked + .label + .panel {
   display: block;
 }
+
+
+
+/* FOR TEMPORARY BLOCK FOR BALANCE NOT ENOUGH */
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Blurry overlay */
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(5px); /* adjust blur strength */
+  background: rgba(255, 255, 255, 0.3); /* soft white tint */
+  z-index: 299;
+  pointer-events: all; /* none: allows clicks through it */
+}
+
+/* Ensure content stays under overlay */
+.panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* END OF TEMPORARY BLOCK FOR BALANCE NOT ENOUGH */
+
 
 
 .logo__{
