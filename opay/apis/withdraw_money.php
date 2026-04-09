@@ -37,6 +37,7 @@ $account_number    = trim($_POST['account_number'] ?? '');
 $bank_code         = trim($_POST['bank_code'] ?? '');
 $account_name      = trim($_POST['account_name'] ?? '');
 
+
 if (
     !empty($payment_reference) &&
     !empty($account_number) &&
@@ -55,7 +56,7 @@ $result = mysqli_query($con, $query);
 $num = mysqli_num_rows($result);
 $amount = 0;
 
-if ($num>0){
+if ($num<1){
     exit;
 }
 
@@ -121,10 +122,10 @@ if ($res['code'] === "00000") {
     $result_ = mysqli_query($con, $query_);
 
     if ($status === "INITIAL") {
-        echo showUI("pending", "Withdrawal Successful", $res['data']);
+        echo showUI("pending", "Withdrawal Successful", $rr['amount'], $res['data']);
         //Your withdrawal is being processed
     } else {
-        echo showUI("success", "Withdrawal successful", $res['data']);
+        echo showUI("success", "Withdrawal successful", $rr['amount'], $res['data']);
     }
 
 } else {
@@ -132,7 +133,7 @@ if ($res['code'] === "00000") {
     $query_ = "UPDATE opay_withdrawal SET status='FAILED', account_number='$account_number', bank_code='$bank_code', account_name='$account_name',error_msg='$err' WHERE payment_reference='$payment_reference'";
     $result_ = mysqli_query($con, $query_);
 
-    echo showUI("error", $res['message'] ?? "Transaction failed");
+    echo showUI("error", $res['message'] ?? "Transaction failed", $rr['amount']);
 }
 
 
@@ -236,7 +237,7 @@ exit;
 
 
 // UI FUNCTION
-function showUI($type, $message, $data = [])
+function showUI($type, $message, $amount, $data = [])
 {
     $color = "#333";
     $bg = "#f5f5f5";
@@ -258,7 +259,7 @@ function showUI($type, $message, $data = [])
 
     if (!empty($data)) {
         $details .= '<table class="table table-striped table-hover"><tbody>';
-        $details .= "<tr><th>Amount</th><td>₦{number_format($amount, 2)}</td></tr>";
+        $details .= "<tr><th>Amount</th><td>₦".number_format($amount, 2)."</td></tr>";
         $details .= "<tr><th>Order No</th><td>{$data['orderNo']}</td></tr>";
         $details .= "<tr><th>Reference</th><td>{$data['reference']}</td></tr>";
         $details .= "<tr><th>Status</th><td>{$data['orderStatus']}</td></tr>";
