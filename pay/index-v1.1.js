@@ -19,18 +19,6 @@ $(function(){
                 let bank_code = datax[i].code;
                 let bank_slug = datax[i].slug;
 
-                if (bank_slug == "paycom"){
-                    bank_code = "100004";
-                }
-
-                if (bank_slug == "palmpay"){
-                    bank_code = "100033";
-                }
-
-                if (bank_slug == "kuda-bank"){
-                    bank_code = "090267";
-                }
-
                 options += '<option value="' + bank_code + '">'+datax[i].name+'</option>'
             }
 
