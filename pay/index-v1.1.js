@@ -24,7 +24,7 @@ $(function(){
                 }
 
                 if (bank_slug == "palmpay"){
-                    bank_code = "999991";
+                    bank_code = "100033";
                 }
 
                 if (bank_slug == "kuda-bank"){
